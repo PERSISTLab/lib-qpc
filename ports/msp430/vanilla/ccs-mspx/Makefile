@@ -49,9 +49,13 @@
 #
 RM = rm -f
 
+#MSPGCC = /Users/ryanscott/ti/msp430_gcc
+ifndef MSPGCC
+$(error MSPGCC not set)
+endif
 #-----------------------------------------------------------------------------
-CC  = /Users/jhester/ti/gcc/bin/msp430-elf-gcc
-LIB = /Users/jhester/ti/gcc/bin/msp430-elf-ar
+CC  = $(MSPGCC)/bin/msp430-elf-gcc
+LIB = $(MSPGCC)/bin/msp430-elf-ar
 
 QPC        ?= ../../../..
 QP_INCDIR  = $(QPC)/include
@@ -62,7 +66,7 @@ QP_PRTDIR  = .
 LIBFLAGS   = rs
 QS_OBJS    =
 
-CCINC      = -I$(QP_PRTDIR) -I$(QP_INCDIR) -I/Users/jhester/ti/gcc/include/
+CCINC      = -I$(QP_PRTDIR) -I$(QP_INCDIR) -I$(MSPGCC)/include/
 
 MSP430_CORE = msp430x
 DEVICE  = msp430fr5989
@@ -317,4 +321,3 @@ $(BINDIR)/qs_u64.o: $(QS_SRCDIR)/qs_u64.c
 clean:
 	-$(RM) $(BINDIR)/*.o
 	-$(RM) $(BINDIR)/*.a
-
